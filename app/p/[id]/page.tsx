@@ -93,7 +93,7 @@ export default async function PersonalityDetail({ params }: Props) {
               
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mt-6">
-                {personality.tags.map((tag) => (
+                {personality.tags.map((tag: string) => (
                   <span key={tag} className="tag">{tag}</span>
                 ))}
               </div>
@@ -106,7 +106,7 @@ export default async function PersonalityDetail({ params }: Props) {
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">核心特质</h3>
                   <div className="flex flex-wrap gap-2">
-                    {data.personality_core.traits.map((trait) => (
+                    {data.personality_core.traits.map((trait: string) => (
                       <span key={trait} className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full">
                         {trait}
                       </span>
@@ -125,7 +125,7 @@ export default async function PersonalityDetail({ params }: Props) {
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">典型开场白</h3>
                   <div className="flex flex-wrap gap-2">
-                    {data.personality_core.speaking_style.typical_openers.map((opener) => (
+                    {data.personality_core.speaking_style.typical_openers.map((opener: string) => (
                       <span key={opener} className="px-3 py-1 bg-gray-100 rounded-full text-sm">
                         "{opener}"
                       </span>
@@ -142,7 +142,7 @@ export default async function PersonalityDetail({ params }: Props) {
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">坚持</h3>
                   <ul className="list-disc list-inside text-gray-600 space-y-1">
-                    {data.values_principles.beliefs.map((belief, i) => (
+                    {data.values_principles.beliefs.map((belief: string, i: number) => (
                       <li key={i}>{belief}</li>
                     ))}
                   </ul>
@@ -150,7 +150,7 @@ export default async function PersonalityDetail({ params }: Props) {
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">拒绝</h3>
                   <ul className="list-disc list-inside text-gray-600 space-y-1">
-                    {data.values_principles.refusals.map((refusal, i) => (
+                    {data.values_principles.refusals.map((refusal: string, i: number) => (
                       <li key={i}>{refusal}</li>
                     ))}
                   </ul>
@@ -173,7 +173,7 @@ export default async function PersonalityDetail({ params }: Props) {
                 <div>
                   <p className="text-sm text-gray-500 mb-1">工具</p>
                   <div className="flex flex-wrap gap-1">
-                    {data.capabilities.tools.map((tool) => (
+                    {data.capabilities.tools.map((tool: string) => (
                       <span key={tool} className="text-xs px-2 py-1 bg-gray-100 rounded">
                         {tool}
                       </span>
@@ -183,7 +183,7 @@ export default async function PersonalityDetail({ params }: Props) {
                 <div>
                   <p className="text-sm text-gray-500 mb-1">技能</p>
                   <div className="flex flex-wrap gap-1">
-                    {data.capabilities.skills.map((skill) => (
+                    {data.capabilities.skills.map((skill: string) => (
                       <span key={skill} className="text-xs px-2 py-1 bg-gray-100 rounded">
                         {skill}
                       </span>
