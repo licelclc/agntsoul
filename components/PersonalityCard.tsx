@@ -38,7 +38,7 @@ export default function PersonalityCard({ personality }: Props) {
         
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag) => (
+          {tags.map((tag: string) => (
             <span key={tag} className="tag">{tag}</span>
           ))}
         </div>
