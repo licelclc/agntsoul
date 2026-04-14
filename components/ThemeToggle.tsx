@@ -18,6 +18,12 @@ export default function ThemeToggle() {
     if (mounted) {
       document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light')
       localStorage.setItem('theme', isDark ? 'dark' : 'light')
+      // 同时设置/移除 dark class，让 Tailwind dark: 前缀生效
+      if (isDark) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
     }
   }, [isDark, mounted])
 

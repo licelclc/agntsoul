@@ -9,13 +9,18 @@ export const metadata: Metadata = {
   description: '发现、分享、保存你的AI人格，让人格可保存、可迁移、可资产化',
 }
 
-// 主题初始化脚本 - 避免闪烁
+// 主题初始化脚本 - 避免闪烁，同时设置 data-theme 和 dark class
 const themeScript = `
   (function() {
     const saved = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const theme = saved || (prefersDark ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   })();
 `;
 

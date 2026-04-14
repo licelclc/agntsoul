@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Download, Eye } from 'lucide-react'
 import DownloadPersonalityButton from '@/components/DownloadPersonalityButton'
+import ThemeToggle from '@/components/ThemeToggle'
+import ParticleBackground from '@/components/ParticleBackground'
 
 interface Props {
   params: { id: string }
@@ -39,15 +41,21 @@ export default async function PersonalityDetail({ params }: Props) {
   const data = personality.personality_data as Personality
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* 粒子背景（暗色模式） */}
+      <ParticleBackground />
+      
       {/* Header */}
-      <header className="bg-white border-b border-gray-100">
+      <header className="bg-white/70 dark:bg-transparent backdrop-blur-xl border-b border-gray-100 dark:border-white/10 sticky top-0 z-40">
         <div className="container py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
+          <Link href="/" className="flex items-center gap-2 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white">
             <ArrowLeft size={20} />
             返回
           </Link>
-          <DownloadPersonalityButton personality={personality} />
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <DownloadPersonalityButton personality={personality} />
+          </div>
         </div>
       </header>
 

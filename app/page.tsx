@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 import { PersonalityRecord } from '@/types/personality'
 import PersonalityCard from '@/components/PersonalityCard'
 import SearchBar from '@/components/SearchBar'
@@ -8,7 +8,7 @@ import ThemeToggle from '@/components/ThemeToggle'
 import ParticleBackground from '@/components/ParticleBackground'
 
 async function getPersonalities(): Promise<PersonalityRecord[]> {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('personalities')
     .select('*')
     .order('created_at', { ascending: false })

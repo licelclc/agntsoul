@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ results: [] })
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('personalities')
     .select('*')
     .or(`name.ilike.%${q}%,description.ilike.%${q}%`)
