@@ -34,9 +34,11 @@ export default async function Home() {
       <header className="bg-white/70 dark:bg-transparent backdrop-blur-xl border-b border-gray-100 dark:border-white/10 sticky top-0 z-40">
         <div className="container py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 flex items-center justify-center shadow-lg">
-              <span className="text-white font-black text-lg">A</span>
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="AgntSoul" 
+              className="h-10 w-auto rounded-lg"
+            />
             <div className="flex flex-col">
               <span className="font-black text-xl bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 dark:from-cyan-400 dark:via-pink-500 dark:to-purple-500 bg-clip-text text-transparent">
                 AgntSoul

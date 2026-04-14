@@ -92,12 +92,12 @@ export default function DownloadModal({ personality, isOpen, onClose }: Download
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
       onClick={handleBackdropClick}
     >
       <div 
         ref={modalRef}
-        className="card w-full max-w-md animate-slide-up overflow-hidden"
+        className="card w-full max-w-md animate-slide-up overflow-hidden shadow-2xl"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}

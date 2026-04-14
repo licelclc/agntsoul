@@ -48,9 +48,18 @@ export default async function PersonalityDetail({ params }: Props) {
       {/* Header */}
       <header className="bg-white/70 dark:bg-transparent backdrop-blur-xl border-b border-gray-100 dark:border-white/10 sticky top-0 z-40">
         <div className="container py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white">
-            <ArrowLeft size={20} />
-            返回
+          <Link href="/" className="flex items-center gap-3">
+            <img 
+              src="/logo.png" 
+              alt="AgntSoul" 
+              className="h-10 w-auto rounded-lg"
+            />
+            <div className="flex flex-col">
+              <span className="font-black text-xl bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 dark:from-cyan-400 dark:via-pink-500 dark:to-purple-500 bg-clip-text text-transparent">
+                AgntSoul
+              </span>
+              <span className="text-xs text-gray-400 dark:text-white/50">AI人格市场</span>
+            </div>
           </Link>
           <div className="flex items-center gap-3">
             <ThemeToggle />
