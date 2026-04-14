@@ -139,7 +139,7 @@ export default function UploadPage() {
                 <div>
                   <span className="text-gray-500">标签：</span>
                   <div className="flex flex-wrap gap-1 mt-1">
-                    {data.metadata.tags.map((tag) => (
+                    {data.metadata.tags.map((tag: string) => (
                       <span key={tag} className="tag">{tag}</span>
                     ))}
                   </div>

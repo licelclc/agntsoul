@@ -1,7 +1,16 @@
+const path = require('path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['example.com', 'avatars.githubusercontent.com']
+    remotePatterns: [
+      { hostname: 'example.com' },
+      { hostname: 'avatars.githubusercontent.com' }
+    ]
+  },
+  output: 'standalone',
+  experimental: {
+    // 禁用 Turbopack 相关的默认行为
   }
 }
 

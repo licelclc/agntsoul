@@ -2,8 +2,8 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { Personality } from '@/types/personality'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Download, Eye, Copy, Check } from 'lucide-react'
-import DownloadButton from '@/components/DownloadButton'
+import { ArrowLeft, Download, Eye } from 'lucide-react'
+import DownloadPersonalityButton from '@/components/DownloadPersonalityButton'
 
 interface Props {
   params: { id: string }
@@ -47,7 +47,7 @@ export default async function PersonalityDetail({ params }: Props) {
             <ArrowLeft size={20} />
             返回
           </Link>
-          <DownloadButton personality={personality} />
+          <DownloadPersonalityButton personality={personality} />
         </div>
       </header>
 
@@ -163,7 +163,7 @@ export default async function PersonalityDetail({ params }: Props) {
           <div className="space-y-6">
             {/* Quick Actions */}
             <div className="card p-6">
-              <DownloadButton personality={personality} />
+              <DownloadPersonalityButton personality={personality} />
             </div>
 
             {/* Capabilities */}
