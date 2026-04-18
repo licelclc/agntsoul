@@ -1,17 +1,14 @@
-const path = require('path')
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    domains: ['*'],
     remotePatterns: [
-      { hostname: 'example.com' },
-      { hostname: 'avatars.githubusercontent.com' }
-    ]
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
-  output: 'standalone',
-  experimental: {
-    // 禁用 Turbopack 相关的默认行为
-  }
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

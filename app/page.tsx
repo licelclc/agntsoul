@@ -1,118 +1,80 @@
-import Link from 'next/link'
-import { supabaseAdmin } from '@/lib/supabase'
-import { PersonalityRecord } from '@/types/personality'
-import PersonalityCard from '@/components/PersonalityCard'
-import SearchBar from '@/components/SearchBar'
-import UploadButton from '@/components/UploadButton'
-import ThemeToggle from '@/components/ThemeToggle'
-import ParticleBackground from '@/components/ParticleBackground'
-
-async function getPersonalities(): Promise<PersonalityRecord[]> {
-  const { data, error } = await supabaseAdmin
-    .from('personalities')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(20)
-  
-  if (error) {
-    console.error('Error fetching personalities:', error)
-    return []
-  }
-  
-  return data || []
-}
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { SearchBar } from '@/components/SearchBar';
+import { SkillCard } from '@/components/SkillCard';
+import { createClient } from '@/lib/supabase/server';
 
 export default async function Home() {
-  const personalities = await getPersonalities()
+  const supabase = createClient();
+  
+  const { data: skills } = await supabase
+    .from('skills')
+    .select('id, name, description, avatar, author, category, tags, download_count')
+    .eq('status', 'published')
+    .order('download_count', { ascending: false })
+    .limit(12);
+
+  const { data: categories } = await supabase
+    .from('categories')
+    .select('*')
+    .order('sort_order', { ascending: true });
 
   return (
-    <div className="min-h-screen relative">
-      {/* 粒子背景（暗色模式） */}
-      <ParticleBackground />
+    <div className="min-h-screen grid-bg">
+      <Header />
       
-      {/* Header */}
-      <header className="bg-white/70 dark:bg-transparent backdrop-blur-xl border-b border-gray-100 dark:border-white/10 sticky top-0 z-40">
-        <div className="container py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <img 
-              src="/logo.png" 
-              alt="AgntSoul" 
-              className="h-10 w-auto rounded-lg"
-            />
-            <div className="flex flex-col">
-              <span className="font-black text-xl bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 dark:from-cyan-400 dark:via-pink-500 dark:to-purple-500 bg-clip-text text-transparent">
-                AgntSoul
-              </span>
-              <span className="text-xs text-gray-400 dark:text-white/50">AI人格市场</span>
+      <main className="pt-24 pb-12">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Hero */}
+          <section className="text-center py-20">
+            <h1 className="text-6xl md:text-8xl font-bold mb-4">
+              <span className="gradient-text">Agnt</span>
+              <span className="text-white/80">Soul</span>
+            </h1>
+            <p className="text-xl text-white/60 mb-8">
+              AI 人格市场 · 发现、分享、下载
+            </p>
+            <div className="max-w-2xl mx-auto">
+              <SearchBar />
             </div>
-          </Link>
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <UploadButton />
-          </div>
-        </div>
-      </header>
+          </section>
 
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-primary-50/80 to-white/50 dark:from-transparent dark:to-transparent py-16 relative">
-        <div className="container text-center">
-          <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-            发现、分享、保存你的AI人格
-          </h1>
-          <p className="text-gray-600 dark:text-white/60 text-lg mb-8">
-            让人格可保存、可迁移、可资产化
-          </p>
-          <SearchBar />
-        </div>
-      </section>
+          {/* 分类 */}
+          {categories && categories.length > 0 && (
+            <section className="mb-12">
+              <div className="flex flex-wrap gap-3 justify-center">
+                {categories.map(cat => (
+                  <span
+                    key={cat.id}
+                    className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-sm hover:bg-white/10 cursor-pointer transition-colors"
+                  >
+                    {cat.icon} {cat.name}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
 
-      {/* Main Content */}
-      <main className="container py-12 relative">
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-cyan-400">{personalities.length}</div>
-            <div className="text-gray-500 dark:text-white/60">人格数量</div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-cyan-400">
-              {personalities.reduce((sum, p) => sum + p.download_count, 0)}
-            </div>
-            <div className="text-gray-500 dark:text-white/60">总下载量</div>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="text-3xl font-bold text-primary-600 dark:text-cyan-400">
-              {personalities.reduce((sum, p) => sum + p.view_count, 0)}
-            </div>
-            <div className="text-gray-500 dark:text-white/60">总访问量</div>
-          </div>
+          {/* 技能列表 */}
+          <section>
+            <h2 className="text-2xl font-bold mb-8">热门技能</h2>
+            {skills && skills.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {skills.map(skill => (
+                  <SkillCard key={skill.id} skill={skill} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 text-white/40">
+                <p className="text-lg">暂无技能数据</p>
+                <p className="text-sm mt-2">请先在后台添加技能或通过 URL 导入</p>
+              </div>
+            )}
+          </section>
         </div>
-
-        {/* Personality List */}
-        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">最新人格</h2>
-        
-        {personalities.length === 0 ? (
-          <div className="card p-12 text-center">
-            <div className="text-gray-400 dark:text-white/40 text-6xl mb-4">🎭</div>
-            <p className="text-gray-500 dark:text-white/60 mb-4">还没有人格，快来上传第一个吧！</p>
-            <UploadButton />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {personalities.map((personality) => (
-              <PersonalityCard key={personality.id} personality={personality} />
-            ))}
-          </div>
-        )}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white/70 dark:bg-transparent backdrop-blur-xl border-t border-gray-100 dark:border-white/10 py-8 relative">
-        <div className="container text-center text-gray-500 dark:text-white/50">
-          <p>人格市场 MVP · AI Personality Market</p>
-          <p className="text-sm mt-2">人格标准格式 v1.0</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
-  )
+  );
 }
